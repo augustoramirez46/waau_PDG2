@@ -11,6 +11,9 @@ const Stack = createNativeStackNavigator();
 import HomePage from "./pages/homePage";
 import LoginPage from "./pages/loginPage";
 
+// Firebase
+
+
 // From the example
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
@@ -21,11 +24,12 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <NavigationContainer
+      style={styles.container}
       screenOptions={{ headerShown: false }}
     >
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginPage} />
-        <Stack.Screen name="Home" component={HomePage} />
+        <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginPage} />
+        <Stack.Screen name="Home" options={{ headerShown: false }} component={HomePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -34,7 +38,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
