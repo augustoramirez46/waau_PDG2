@@ -3,21 +3,23 @@ import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView, Toucha
 
 // Firebase
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import authentication from '../firebase';
+import { authentication } from '../firebase';
 
 
 
 
 const LoginPage = ({ navigation }) => {
+    const [isSignedIn, setSignedIn] = useState(false);
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handleSignUp = () => {
 
         createUserWithEmailAndPassword(authentication, email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log(user.email);
+            .then((re) => {
+
+                console.log(re);
             })
             .catch(error => alert(error.message))
     }
