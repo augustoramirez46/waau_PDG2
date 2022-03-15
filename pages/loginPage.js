@@ -1,32 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 
 // Firebase
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { authentication } from '../firebase';
 
 
 
 
-const LoginPage = ({ navigation }) => {
-    const [isSignedIn, setSignedIn] = useState(false);
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+const LoginPage = ({ navigation }) => {
+    const [isSignedIn, setIsSignedIn] = useState(false);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+
+
+    useEffect(() => {
+        const unsuscribe = onAuthStateChanged(authentication, user => {
+            if (user && isSignedIn) {
+                navigation.navigate("Home")
+            }
+        })
+
+        return unsuscribe
+    })
+
 
     const handleSignUp = () => {
 
         createUserWithEmailAndPassword(authentication, email, password)
             .then((re) => {
-
+                setIsSignedIn(true);
                 console.log(re);
             })
             .catch(error => alert(error.message))
     }
 
+    const handleLogin = () => {
+
+        signInWithEmailAndPassword(authentication, email, password)
+            .then((re) => {
+                setIsSignedIn(true);
+                console.log(re);
+            })
+            .catch(error => alert(error.message))
+    }
+
+    const handleLogOut = () => {
+
+        signOut(authentication)
+            .then((re) => {
+                setIsSignedIn(false)
+            })
+            .catch(error => alert(error.message))
+
+    }
+
     return (
         <KeyboardAvoidingView
             style={styles.container}
+            behavior="padding"
         >
 
             <View style={styles.inputContainer}>
@@ -51,7 +86,7 @@ const LoginPage = ({ navigation }) => {
                 style={styles.buttonContainer}
             >
                 <TouchableOpacity
-                    onPress={() => { }}
+                    onPress={handleLogin}
                     style={styles.button}
                 >
                     <Text style={styles.buttonText}>Login</Text>
