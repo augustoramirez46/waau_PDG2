@@ -20,7 +20,7 @@ const LoginPage = ({ navigation }) => {
     useEffect(() => {
         const unsuscribe = onAuthStateChanged(authentication, user => {
             if (user && isSignedIn) {
-                navigation.navigate("Home")
+                navigation.navigate("HomeAdopter")
             }
         })
 

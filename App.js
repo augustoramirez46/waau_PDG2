@@ -8,8 +8,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 // Pages
-import HomePage from "./pages/homePage";
+import HomePageAdopter from "./pages/homePageAdopter";
 import LoginPage from "./pages/loginPage";
+import FormPage from "./pages/formPage"
 
 // Firebase
 
@@ -27,9 +28,10 @@ export default function App() {
       style={styles.container}
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Form">
         <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginPage} />
-        <Stack.Screen name="Home" options={{ headerShown: false }} component={HomePage} />
+        <Stack.Screen name="Form" options={{ headerShown: false }} component={FormPage} />
+        <Stack.Screen name="HomeAdopter" options={{ headerShown: false }} component={HomePageAdopter} />
       </Stack.Navigator>
     </NavigationContainer>
   );
