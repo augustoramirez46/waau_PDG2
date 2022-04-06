@@ -28,7 +28,7 @@ export default function App() {
       style={styles.container}
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Navigator initialRouteName="Form">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginPage} />
         <Stack.Screen name="Form" options={{ headerShown: false }} component={FormPage} />
         <Stack.Screen name="HomeAdopter" options={{ headerShown: false }} component={HomePageAdopter} />

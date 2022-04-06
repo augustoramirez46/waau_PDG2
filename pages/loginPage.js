@@ -15,12 +15,13 @@ const LoginPage = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-
+    // Checks if the user is logged in to move forward in the navigation
 
     useEffect(() => {
         const unsuscribe = onAuthStateChanged(authentication, user => {
             if (user && isSignedIn) {
-                navigation.navigate("HomeAdopter")
+                // TODO:  change navigation again for "HomeAdopter"
+                navigation.navigate("Form")
             }
         })
 

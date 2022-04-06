@@ -3,6 +3,9 @@ import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView, Toucha
 import { StatusBar } from 'react-native';
 import { RadioGroup, RadioButton } from 'react-native-radio-buttons-group';
 
+import { getDatabase, ref, set, get, update, remove, child } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
+
 const FormPage = () => {
     const [form, setForm] = useState([
         {
@@ -62,6 +65,23 @@ const FormPage = () => {
         setForm(formClone);
     }
 
+    const handleRadioButton = (key, label) => {
+        const formClone = JSON.parse(JSON.stringify(form));
+        formClone[key].response = label;
+        setForm(formClone);
+
+    }
+
+    const handleFormSubmission = () => {
+        const db = getDatabase();
+        const userEmail = getAuth().currentUser.uid;
+        const reference = ref(db, '/adopters/' + userEmail + '/responses/');
+
+        set(reference, {
+            form
+        });
+    }
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -84,13 +104,22 @@ const FormPage = () => {
                             // ))
 
                             parentQuestion.options.map((childOption) => (
-                                <RadioButton label={childOption}>{childOption}</RadioButton>
+                                <RadioButton
+                                    label={childOption}
+                                    selected={parentQuestion.response == childOption}
+                                    onPress={() => { handleRadioButton(parentQuestion.key, childOption) }}
+                                >{childOption}</RadioButton>
                             ))
 
                         }
                     </View>
                 )
                 )}
+
+                <TouchableOpacity
+                    onPress={handleFormSubmission}
+                    style={styles.button}
+                ></TouchableOpacity>
 
             </ScrollView>
         </SafeAreaView>
@@ -104,6 +133,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    button: {
+        backgroundColor: '#FF7B36',
+        width: '100%',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center'
+
+    }
 });
 
 export default FormPage;
