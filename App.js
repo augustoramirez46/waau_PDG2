@@ -9,6 +9,7 @@ const Stack = createNativeStackNavigator();
 
 // Pages
 import HomePageAdopter from "./pages/homePageAdopter";
+import HoomePageVolunteer from "./pages/homePageVolunteer";
 import LoginPage from "./pages/loginPage";
 import FormPage from "./pages/formPage"
 
@@ -32,6 +33,7 @@ export default function App() {
         <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginPage} />
         <Stack.Screen name="Form" options={{ headerShown: false }} component={FormPage} />
         <Stack.Screen name="HomeAdopter" options={{ headerShown: false }} component={HomePageAdopter} />
+        <Stack.Screen name="HomeVolunteer" options={{ headerShown: false }} component={HoomePageVolunteer} />
       </Stack.Navigator>
     </NavigationContainer>
   );

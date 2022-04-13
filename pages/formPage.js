@@ -49,7 +49,7 @@ const FormPage = () => {
         },
         {
             key: 4,
-            question: "¿erigei?",
+            question: "¿Pregunta abierta 2?",
             options: [],
             isOpenEnded: true,
             response: "",
@@ -74,8 +74,8 @@ const FormPage = () => {
 
     const handleFormSubmission = () => {
         const db = getDatabase();
-        const userEmail = getAuth().currentUser.uid;
-        const reference = ref(db, '/adopters/' + userEmail + '/responses/');
+        const userUID = getAuth().currentUser.uid;
+        const reference = ref(db, '/users/' + userUID + '/responses/');
 
         set(reference, {
             form
@@ -107,6 +107,7 @@ const FormPage = () => {
                                 <RadioButton
                                     label={childOption}
                                     selected={parentQuestion.response == childOption}
+                                    // The () => {} is so the handle doesn't launch instantly
                                     onPress={() => { handleRadioButton(parentQuestion.key, childOption) }}
                                 >{childOption}</RadioButton>
                             ))

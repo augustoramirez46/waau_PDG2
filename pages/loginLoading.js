@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const HomePage = () => {
+const LoginLoading = () => {
     return (
         <View style={styles.container}>
             <Text style={{ color: '#000', }}>Voluntario</Text>
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
-export default HomePage;
+export default LoginLoading;
