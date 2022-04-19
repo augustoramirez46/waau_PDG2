@@ -131,10 +131,7 @@ const LoginPage = ({ navigation }) => {
             }).catch((error) => {
                 console.error(error);
             });
-
-        })
-
-
+        });
     }
 
     // Alert from selecting signup without choosing user type
