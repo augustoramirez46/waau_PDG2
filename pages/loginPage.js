@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView, TouchableOpacity, Image, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Image, Alert } from 'react-native';
 
 // Firebase
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
@@ -24,8 +24,9 @@ const LoginPage = ({ navigation }) => {
 
                 handleFetchUserType().then((userSnapshot) => {
                     switch (userSnapshot) {
+                        //TODO:Change to "HomeAdopter"
                         case 'adopter':
-                            navigation.navigate("HomeAdopter");
+                            navigation.navigate("Register");
                             console.log("desdelNavigate");
                             break;
 

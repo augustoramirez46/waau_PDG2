@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView, TouchableOpacity, ScrollView, Li, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import { StatusBar } from 'react-native';
 import { RadioGroup, RadioButton } from 'react-native-radio-buttons-group';
 
@@ -91,18 +91,15 @@ const FormPage = () => {
                     <View>
                         <Text key={parentQuestion.key}>{parentQuestion.question}</Text>
                         {parentQuestion.isOpenEnded ?
-
-                            <TextInput
-                                placeholder=':)'
-                                value={parentQuestion.response}
-                                onChangeText={text => handleQuestion(parentQuestion.key, text)}
-                                keyboardType={parentQuestion.questionType}
-                            ></TextInput>
+                            <SafeAreaView>
+                                <TextInput
+                                    placeholder='Escribe aqui'
+                                    value={parentQuestion.response}
+                                    onChangeText={text => handleQuestion(parentQuestion.key, text)}
+                                    keyboardType={parentQuestion.questionType}
+                                ></TextInput>
+                            </SafeAreaView>
                             :
-                            // parentQuestion.options.map((childOption) => (
-                            //     <Text>{childOption}</Text>
-                            // ))
-
                             parentQuestion.options.map((childOption) => (
                                 <RadioButton
                                     label={childOption}

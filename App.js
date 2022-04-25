@@ -11,7 +11,9 @@ const Stack = createNativeStackNavigator();
 import HomePageAdopter from "./pages/homePageAdopter";
 import HoomePageVolunteer from "./pages/homePageVolunteer";
 import LoginPage from "./pages/loginPage";
-import FormPage from "./pages/formPage"
+import FormPage from "./pages/formPage";
+import RegisterExtraDataPage from "./pages/registerExtraDataPage";
+
 
 // Firebase
 
@@ -31,6 +33,7 @@ export default function App() {
     >
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginPage} />
+        <Stack.Screen name="Register" options={{ headerShown: false }} component={RegisterExtraDataPage} />
         <Stack.Screen name="Form" options={{ headerShown: false }} component={FormPage} />
         <Stack.Screen name="HomeAdopter" options={{ headerShown: false }} component={HomePageAdopter} />
         <Stack.Screen name="HomeVolunteer" options={{ headerShown: false }} component={HoomePageVolunteer} />
