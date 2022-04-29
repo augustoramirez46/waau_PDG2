@@ -14,7 +14,7 @@ const LoginPage = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userType, setUserType] = useState('')
+    const [userType, setUserType] = useState('');
 
     // Checks if the user is logged in to move forward in the navigation, and which type of user is 
 
@@ -26,7 +26,7 @@ const LoginPage = ({ navigation }) => {
                     switch (userSnapshot) {
                         //TODO:Change to "HomeAdopter"
                         case 'adopter':
-                            navigation.navigate("Register");
+                            navigation.navigate("HomeAdopter");
                             console.log("desdelNavigate");
                             break;
 
@@ -50,6 +50,8 @@ const LoginPage = ({ navigation }) => {
     // Signup
 
     const handleSignUp = () => {
+        navigation.navigate("Register")
+        return;
         if (userType == '') {
             createOneButtonAlert();
             return;
@@ -59,10 +61,7 @@ const LoginPage = ({ navigation }) => {
             .then((re) => {
                 // Submit user type
                 handleUserSubmission()
-
-                setTimeout(() => {
-                    setIsSignedIn(true);
-                }, 1500)
+                setIsSignedIn(true);
 
                 console.log(re);
             })
@@ -73,13 +72,10 @@ const LoginPage = ({ navigation }) => {
     // Login
 
     const handleLogin = () => {
-
         signInWithEmailAndPassword(authentication, email, password)
             .then((re) => {
                 console.log(re);
-                setTimeout(() => {
-                    setIsSignedIn(true);
-                }, 1500)
+                setIsSignedIn(true);
 
             })
             .catch(error => alert(error.message))
@@ -98,7 +94,7 @@ const LoginPage = ({ navigation }) => {
 
     }
 
-    // User type submission to database
+    // User type submission to database (unused)
 
     const handleUserSubmission = () => {
 
@@ -154,7 +150,7 @@ const LoginPage = ({ navigation }) => {
             behavior="padding"
         >
             <Image style={styles.loginLogo} source={require('../resources/img/icon_transp.png')} />
-            <Text>Bienvenid@</Text>
+            <Text style={styles.loginTitle}>¡Bienvenido de nuevo!</Text>
 
 
             <View style={styles.inputContainer}>
@@ -191,30 +187,6 @@ const LoginPage = ({ navigation }) => {
                 >
                     <Text style={styles.buttonOutlineText}>Registrarme</Text>
                 </TouchableOpacity>
-
-                <View
-                    style={styles.buttonContainerUser}
-                >
-                    <Text style={styles.buttonContainerUser__title}>Yo soy:</Text>
-                    <TouchableOpacity
-                        onPress={() => { setUserType('adopter') }}
-                        style={[styles.buttonUser, userType == 'adopter' ? styles.buttonUserSelected : styles.buttonUser]}
-                    >
-                        <Text
-                            style={[styles.buttonUserText, userType == 'adopter' ? styles.buttonUserTextSelected : styles.buttonUserText]}
-                        >Adoptante</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={() => { setUserType('volunteer') }}
-                        style={[styles.buttonUser, userType == 'volunteer' ? styles.buttonUserSelected : styles.buttonUser]}
-                    >
-                        <Text
-                            style={[styles.buttonUserText, userType == 'volunteer' ? styles.buttonUserTextSelected : styles.buttonUserText]}
-                        >Voluntario</Text>
-                    </TouchableOpacity>
-                </View>
-
             </View>
         </KeyboardAvoidingView>
     );
@@ -225,6 +197,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    loginTitle: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        marginBottom: 10,
+        color: '#808080',
+
     },
     inputContainer: {
         width: '80%'
@@ -266,7 +245,7 @@ const styles = StyleSheet.create({
     },
     buttonOutlineText: {
         color: '#FF7B36',
-
+        fontWeight: '400',
     },
     loginLogo: {
         width: 200,

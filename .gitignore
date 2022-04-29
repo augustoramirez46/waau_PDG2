@@ -9,10 +9,12 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+.expo-shared/
 
 # macOS
 .DS_Store
 
 # vscode
-.vscode/
+.vscode
 desktop.ini
+/.vscode/

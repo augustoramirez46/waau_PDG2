@@ -14,8 +14,6 @@ const FormPage = () => {
             options: ["Si", "No"],
             isOpenEnded: false,
             response: "",
-
-
         },
         {
             key: 1,
@@ -28,7 +26,6 @@ const FormPage = () => {
             ],
             isOpenEnded: false,
             response: "",
-
         },
         {
             key: 2,
@@ -37,7 +34,6 @@ const FormPage = () => {
             isOpenEnded: true,
             response: "",
             questionType: "numeric",
-
         },
         {
             key: 3,
@@ -45,7 +41,6 @@ const FormPage = () => {
             options: ["Si", "No"],
             isOpenEnded: false,
             response: "",
-
         },
         {
             key: 4,
@@ -54,7 +49,6 @@ const FormPage = () => {
             isOpenEnded: true,
             response: "",
             questionType: "default",
-
         },
 
     ]);
@@ -78,6 +72,7 @@ const FormPage = () => {
         const reference = ref(db, '/users/' + userUID + '/responses/');
 
         set(reference, {
+            status: 'sent',
             form
         });
     }
@@ -85,39 +80,59 @@ const FormPage = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={{ paddingTop: StatusBar.currentHeight + 50, paddingLeft: 30, paddingRight: 30 }}>
-                {form.map((parentQuestion) =>
-                (
-                    <View>
-                        <Text key={parentQuestion.key}>{parentQuestion.question}</Text>
-                        {parentQuestion.isOpenEnded ?
-                            <SafeAreaView>
-                                <TextInput
-                                    placeholder='Escribe aqui'
-                                    value={parentQuestion.response}
-                                    onChangeText={text => handleQuestion(parentQuestion.key, text)}
-                                    keyboardType={parentQuestion.questionType}
-                                ></TextInput>
-                            </SafeAreaView>
-                            :
-                            parentQuestion.options.map((childOption) => (
-                                <RadioButton
-                                    label={childOption}
-                                    selected={parentQuestion.response == childOption}
-                                    // The () => {} is so the handle doesn't launch instantly
-                                    onPress={() => { handleRadioButton(parentQuestion.key, childOption) }}
-                                >{childOption}</RadioButton>
-                            ))
+            <ScrollView>
+                <View style={styles.subContainer}>
+                    <Text style={styles.formTitle}>Pre-diagnóstico de adopción</Text>
+                    {form.map((parentQuestion) =>
+                    (
+                        <View
+                            style={styles.questionContainer}
+                        >
+                            <Text
+                                key={parentQuestion.key}
+                                style={styles.questionTitle}
+                            >
+                                {parentQuestion.question}
+                            </Text>
 
-                        }
-                    </View>
-                )
-                )}
+                            {parentQuestion.isOpenEnded ?
+                                <KeyboardAvoidingView
+                                    behavior='padding'
+                                >
+                                    <TextInput
+                                        placeholder='Escribe aqui'
+                                        value={parentQuestion.response}
+                                        onChangeText={text => handleQuestion(parentQuestion.key, text)}
+                                        keyboardType={parentQuestion.questionType}
+                                        style={styles.input}
+                                    ></TextInput>
+                                </KeyboardAvoidingView>
+                                :
+                                parentQuestion.options.map((childOption) => (
+                                    <RadioButton
+                                        label={childOption}
+                                        selected={parentQuestion.response == childOption}
+                                        // The () => {} is so the handle doesn't launch instantly
+                                        onPress={() => { handleRadioButton(parentQuestion.key, childOption) }}
+                                        containerStyle={parentQuestion.response == childOption ? styles.option__selected : styles.option}
+                                        style={parentQuestion.response == childOption ? styles.option__selected : styles.option}
+                                    >{childOption}</RadioButton>
+                                ))
 
-                <TouchableOpacity
-                    onPress={handleFormSubmission}
-                    style={styles.button}
-                ></TouchableOpacity>
+                            }
+                        </View>
+                    )
+                    )}
+
+                    <TouchableOpacity
+                        onPress={handleFormSubmission}
+                        style={styles.button}
+                    >
+                        <Text
+                            style={styles.buttonText}
+                        >Enviar respuestas</Text>
+                    </TouchableOpacity>
+                </View>
 
             </ScrollView>
         </SafeAreaView>
@@ -127,17 +142,65 @@ const FormPage = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        minHeight: '100%',
+
+    },
+    subContainer: {
+        width: '90%',
+        alignSelf: 'center',
+        minHeight: '100%'
+    },
+    formTitle: {
+        alignSelf: 'center',
+        margin: 10,
+    },
+    questionTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#A5A5A5',
+        paddingLeft: 10,
+        marginBottom: 10
+
     },
     button: {
         backgroundColor: '#FF7B36',
         width: '100%',
         padding: 15,
         borderRadius: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 30
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16
 
+    },
+    questionContainer: {
+        marginTop: 25,
+
+    },
+    input: {
+        backgroundColor: 'white',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 10,
+        marginTop: 5,
+        marginBottom: 5,
+    },
+    option: {
+        padding: 17,
+        borderWidth: 1,
+        borderColor: '#c8c8c8',
+        borderRadius: 5,
+    },
+    option__selected: {
+        padding: 17,
+        borderRadius: 5,
+        backgroundColor: '#FF7B36',
+        color: '#ffffff',
     }
 });
 
