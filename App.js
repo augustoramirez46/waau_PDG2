@@ -31,7 +31,7 @@ export default function App() {
       style={styles.container}
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="HomeVolunteer">
         <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginPage} />
         <Stack.Screen name="Register" options={{ headerShown: true, headerBackButtonMenuEnabled: true, title: "Registro" }} component={RegisterPage} />
         <Stack.Screen name="Form" options={{ headerShown: true, headerBackButtonMenuEnabled: true, title: "Formulario" }} component={FormPage} />

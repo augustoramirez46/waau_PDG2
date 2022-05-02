@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import NavHeader from '../components/navHeader';
 
 // Firebase
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import { authentication } from '../firebase';
 
 
@@ -14,13 +14,14 @@ const HomePageAdopter = ({ navigation }) => {
         navigation.navigate("Form");
     }
 
+    // Logout for navheader
+
     const handleLogOut = () => {
         signOut(authentication)
             .then((re) => {
                 navigation.navigate("Login");
             })
             .catch(error => alert(error.message))
-
     }
 
     return (
@@ -30,8 +31,7 @@ const HomePageAdopter = ({ navigation }) => {
             </View>
 
             <View style={styles.container}>
-
-                <Text style={{ color: '#000', }}>Adoptante</Text>
+                <Text>Adoptante</Text>
                 <TouchableOpacity
                     onPress={handleConstNavigate}
                     style={styles.button}
