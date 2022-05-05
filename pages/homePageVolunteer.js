@@ -6,13 +6,14 @@ import { RadioGroup, RadioButton } from 'react-native-radio-buttons-group';
 // Firebase
 import { signOut } from 'firebase/auth';
 import { authentication } from '../firebase';
-import { getDatabase, ref, get, onValue, update } from "firebase/database";
+import { getDatabase, ref, get, set, onValue, update } from "firebase/database";
 
-const HomePage = ({ navigation }) => {
+const HomePageVolunteer = ({ navigation }) => {
 
     const [usersDatabase, setUsersDatabase] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [currentForm, setCurrentForm] = useState(false);
+    const [userRated, setUserRated] = useState(false);
 
     useEffect(() => {
 
@@ -75,12 +76,40 @@ const HomePage = ({ navigation }) => {
     }
 
     const handleShowModal = (elem) => {
+
         const user = elem;
         setCurrentForm(JSON.parse(JSON.stringify(user.responses.form)));
+        setUserRated(JSON.parse(JSON.stringify(user)))
 
         setModalVisible(!modalVisible);
         // console.log(currentForm);
 
+
+    }
+
+    const handleRateUser = (grade) => {
+        const db = getDatabase();
+        const UID = userRated.userUID
+        const reference = ref(db, '/users/' + UID + '/responses/');
+
+        switch (grade) {
+            case 'failed':
+                update(reference, {
+                    status: grade
+                });
+
+                break;
+
+            case 'approved':
+                update(reference, {
+                    status: grade
+                });
+                break;
+            default:
+                break;
+        }
+
+        setModalVisible(!modalVisible)
 
     }
 
@@ -145,38 +174,71 @@ const HomePage = ({ navigation }) => {
                             :
                             <></>
                         }
+                        <View style={styles.modalButtonContainer}>
 
-                        <Pressable
-                            style={[styles.buttonMod, styles.buttonClose]}
-                            onPress={() => setModalVisible(!modalVisible)}
-                        >
-                            <Text style={styles.textStyle}>Hide Modal</Text>
-                        </Pressable>
+                            <Pressable
+                                style={[styles.buttonMod, styles.buttonRej]}
+                                onPress={() => handleRateUser('failed')}
+                            >
+                                <Text style={styles.buttonText}>Reprobar adoptante</Text>
+                            </Pressable>
 
+                            <Pressable
+                                style={[styles.buttonMod, styles.buttonClose]}
+                                onPress={() => setModalVisible(!modalVisible)}
+                            >
+                                <Text style={styles.buttonText}>Cerrar</Text>
+                            </Pressable>
 
+                            <Pressable
+                                style={[styles.buttonMod, styles.buttonApp]}
+                                onPress={() => handleRateUser('approved')}
+                            >
+                                <Text style={styles.buttonText}>Aprobar adoptante</Text>
+                            </Pressable>
+
+                        </View>
                     </ScrollView>
                 </Modal>
 
                 {usersDatabase.map((user) => (
                     <View style={{ width: '100%' }}>
-                        {(user.responses)
+                        {(user.responses && (user.responses.status == 'sent' || user.responses.status == 'pending'))
                             ?
                             <View style={styles.responseContainer}>
                                 <Image style={styles.notificationIcon} source={require('../resources/img/ic_round-notifications.png')} />
                                 <View style={styles.notificationTextContainer}>
-                                    <Text style={styles.notificationHeadline}>{`${user.userName} ha subido una actualización`}</Text>
-                                    <Text>{user.responses.status}</Text>
+                                    <Text style={styles.notificationHeadline}>{(user.responses.status == 'sent' ? `${user.userName} ha subido una actualización` : `${user.userName} se ha creado una cuenta nueva`)}</Text>
+                                    <Text style={[styles.statusPending, styles.plaintext]}>Estado:</Text>
+                                    <Text style={(user.responses.status == 'sent' ? styles.statusSent : styles.statusPending)}>{(user.responses.status == 'sent' ? 'Enviado' : 'Pendiente')}</Text>
 
-                                    <TouchableOpacity
-                                        style={styles.button}
-                                        onPress={() => handleShowModal(user)}
-                                    >
-                                        <Text
-                                            style={styles.buttonText}
+                                    {(user.responses.status == 'sent')
+                                        ?
+                                        < TouchableOpacity
+                                            style={styles.button}
+                                            onPress={() => handleShowModal(user)}
                                         >
-                                            REVISAR
-                                        </Text>
-                                    </TouchableOpacity>
+                                            <Text
+                                                style={styles.buttonText}
+                                            >
+                                                REVISAR
+                                            </Text>
+                                        </TouchableOpacity>
+                                        :
+                                        < View
+                                            style={[styles.button, styles.buttonDissabled]}
+
+                                        >
+                                            <Text
+                                                style={styles.buttonText}
+                                            >
+                                                REVISAR
+                                            </Text>
+                                        </View>
+
+                                    }
+
+
                                 </View>
                             </View>
                             :
@@ -251,7 +313,7 @@ const styles = StyleSheet.create({
     notificationHeadline: {
         width: '100%',
         marginRight: 'auto',
-
+        marginBottom: 5,
 
     },
     modalView: {
@@ -269,13 +331,29 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
+    buttonDissabled: {
+        backgroundColor: '#d2d2d2'
+    },
     buttonMod: {
-        borderRadius: 20,
+        borderRadius: 10,
         padding: 10,
-        elevation: 2
+        elevation: 2,
+        marginLeft: 5,
+        marginRight: 5
     },
     buttonClose: {
-        backgroundColor: "#2196F3",
+        backgroundColor: "#7d7d7d",
+    },
+    buttonRej: {
+        backgroundColor: "#ef8787",
+    },
+    buttonApp: {
+        backgroundColor: "#b0eac8",
+    },
+    modalButtonContainer: {
+        display: 'flex',
+        flexDirection: 'row'
+
     },
     questionTitle: {
         fontSize: 24,
@@ -312,6 +390,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#FF7B36',
         color: '#ffffff',
+    },
+    statusSent: {
+        color: '#3bc922',
+        textDecorationLine: 'underline',
+        alignSelf: 'center'
+    },
+    statusPending: {
+        color: '#bfa812',
+        textDecorationLine: 'underline',
+        alignSelf: 'center'
+    },
+    plaintext: {
+        textDecorationLine: 'none',
+        color: '#000'
     }
 });
-export default HomePage;
+export default HomePageVolunteer;

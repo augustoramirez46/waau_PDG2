@@ -149,6 +149,7 @@ const LoginPage = ({ navigation }) => {
             style={styles.container}
             behavior="padding"
         >
+            <Image style={styles.loginHeader} source={require('../resources/img/loginHeader.png')} />
             <Image style={styles.loginLogo} source={require('../resources/img/icon_transp.png')} />
             <Text style={styles.loginTitle}>¡Bienvenido de nuevo!</Text>
 
@@ -204,6 +205,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         color: '#808080',
 
+    },
+    loginHeader: {
+        position: 'absolute',
+        width: '100%',
+        top: 0,
+        left: 0
     },
     inputContainer: {
         width: '80%'

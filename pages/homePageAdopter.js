@@ -10,8 +10,12 @@ import { authentication } from '../firebase';
 
 const HomePageAdopter = ({ navigation }) => {
 
-    const handleConstNavigate = () => {
+    const handleNavigateForm = () => {
         navigation.navigate("Form");
+    }
+
+    const handleNavigateChat = () => {
+        navigation.navigate("ChatPage");
     }
 
     // Logout for navheader
@@ -33,10 +37,16 @@ const HomePageAdopter = ({ navigation }) => {
             <View style={styles.container}>
                 <Text>Adoptante</Text>
                 <TouchableOpacity
-                    onPress={handleConstNavigate}
+                    onPress={handleNavigateForm}
                     style={styles.button}
                 >
                     <Text style={styles.buttonText}>Ir al formulario</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={handleNavigateChat}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonText}>Ir al chat</Text>
                 </TouchableOpacity>
             </View></>
     );

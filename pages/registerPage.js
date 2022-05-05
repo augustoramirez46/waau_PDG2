@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, SafeAreaView, Alert, Image } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, SafeAreaView, Alert, Image, ScrollView } from 'react-native';
 import { StatusBar } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import AppLoading from 'expo-app-loading';
@@ -47,6 +47,7 @@ const RegisterPage = ({ navigation }) => {
             userDir,
             userPhoneNumber,
             email,
+            userUID
         });
 
         const referenceStatus = ref(db, '/users/' + userUID + '/responses/');
@@ -115,7 +116,7 @@ const RegisterPage = ({ navigation }) => {
             behavior="padding"
             style={styles.container}
         >
-            <View
+            <ScrollView
                 style={styles.subContainer}
                 behavior="padding"
             >
@@ -221,7 +222,7 @@ const RegisterPage = ({ navigation }) => {
                         style={styles.buttonText}
                     >Registrarme</Text>
                 </TouchableOpacity>
-            </View>
+            </ScrollView>
         </KeyboardAvoidingView>
 
     );

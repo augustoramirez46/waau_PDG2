@@ -6,7 +6,7 @@ import { RadioGroup, RadioButton } from 'react-native-radio-buttons-group';
 import { getDatabase, ref, set, get, update, remove, child } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 
-const FormPage = () => {
+const FormPage = ({ navigation }) => {
     const [form, setForm] = useState([
         {
             key: 0,
@@ -75,6 +75,8 @@ const FormPage = () => {
             status: 'sent',
             form
         });
+
+        navigation.navigate("HomeAdopter");
     }
 
 
@@ -170,7 +172,8 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-        marginTop: 30
+        marginTop: 30,
+        marginBottom: 100
     },
     buttonText: {
         color: 'white',
