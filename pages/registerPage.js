@@ -1,7 +1,11 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, SafeAreaView, Alert, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, Alert, Image, ScrollView } from 'react-native';
 import { StatusBar } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import AppLoading from 'expo-app-loading';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// Styles
+import { Fonts, FontsSizes } from "../config/useFonts.js";
 
 import { getDatabase, ref, set, get, update, remove, child } from 'firebase/database';
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword } from 'firebase/auth';
@@ -49,6 +53,8 @@ const RegisterPage = ({ navigation }) => {
             email,
             userUID
         });
+
+        if (userType == 'volunteer') return;
 
         const referenceStatus = ref(db, '/users/' + userUID + '/responses/');
 
@@ -113,12 +119,10 @@ const RegisterPage = ({ navigation }) => {
 
     return (
         <KeyboardAvoidingView
-            behavior="padding"
             style={styles.container}
         >
             <ScrollView
                 style={styles.subContainer}
-                behavior="padding"
             >
                 <Image style={styles.registerLogo} source={require('../resources/img/icon_transp.png')} />
                 <Text style={styles.buttonContainerUser__title}>Yo soy:</Text>
@@ -251,19 +255,23 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         marginBottom: 5,
+        fontFamily: Fonts.Poppins.Regular
     },
     button: {
         backgroundColor: '#FF7B36',
         width: '100%',
         padding: 15,
         borderRadius: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 30,
+        marginBottom: 20
 
     },
     buttonText: {
         color: 'white',
         fontWeight: '700',
-        fontSize: 16
+        fontSize: FontsSizes.subtitle,
+        fontFamily: Fonts.Poppins.Bold
 
     },
     buttonOutline: {
@@ -278,62 +286,58 @@ const styles = StyleSheet.create({
 
     },
     buttonContainerUser: {
-        width: '80%',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 3,
+        marginTop: 1,
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
+        marginBottom: 20,
+
     },
     buttonUser: {
-        backgroundColor: 'white',
         width: '40%',
         marginTop: 5,
-        marginRight: 1,
         marginBottom: 0,
-        marginLeft: 1,
-        borderColor: '#FF7B36',
-        borderRadius: 10,
-        borderWidth: 2,
-        alignItems: 'center'
+        alignItems: 'center',
+        borderBottomWidth: 2,
+        borderColor: '#939393',
 
     },
     buttonUserSelected: {
-        backgroundColor: '#FF7B36',
-        width: '50%',
+        width: '40%',
         marginTop: 5,
-        marginRight: 1,
         marginBottom: 0,
-        marginLeft: 1,
-        padding: 5,
-        borderRadius: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        borderBottomWidth: 2,
+        borderColor: '#FF7B36',
 
     },
     buttonUserText: {
-        color: '#FF7B36',
-        fontWeight: '700',
-        fontSize: 14,
-        margin: 4
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
+        color: '#939393',
 
     },
     buttonUserTextSelected: {
-        color: 'white',
-        fontWeight: '700',
-        fontSize: 14,
-        margin: 4
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
+        color: '#FF7B36',
 
     },
     buttonContainerUser__title: {
+        fontFamily: Fonts.Poppins.Bold,
+        fontSize: FontsSizes.title,
+        color: '#6f6f6f',
         alignSelf: 'center',
         marginBottom: 2
     },
     questionTitle: {
-        paddingLeft: 15,
-        marginTop: 10,
-        fontWeight: '600',
+        fontFamily: Fonts.Poppins.SemiBold,
+        fontSize: FontsSizes.subtitle,
+        paddingLeft: 2,
+        marginTop: 20,
         color: '#A5A5A5'
     }
 });

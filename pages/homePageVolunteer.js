@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, Modal, ScrollView, Pressable } from 'react-native';
 import NavHeader from '../components/navHeader';
 import { RadioGroup, RadioButton } from 'react-native-radio-buttons-group';
+import AppLoading from "expo-app-loading";
+
+// Styles
+import { Fonts, FontsSizes } from "../config/useFonts.js";
 
 // Firebase
-import { signOut } from 'firebase/auth';
+import { signOut, getAuth } from 'firebase/auth';
 import { authentication } from '../firebase';
 import { getDatabase, ref, get, set, onValue, update } from "firebase/database";
 
@@ -14,6 +18,10 @@ const HomePageVolunteer = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [currentForm, setCurrentForm] = useState(false);
     const [userRated, setUserRated] = useState(false);
+    const [currentVolunteer, setCurrentVolunteer] = useState(false);
+    const [state, setState] = useState({
+        isReady: false,
+    });
 
     useEffect(() => {
 
@@ -30,39 +38,34 @@ const HomePageVolunteer = ({ navigation }) => {
                     setUsersDatabase(oldArray => [...oldArray, user]);
                 });
             }
-            // console.log(usersDatabase);
 
-            //  setUsersDatabase(data);
-            //  console.log(usersDatabase);
         });
 
+        let vName = handleFetchUser();
+        console.log(vName);
+        setCurrentVolunteer(vName);
 
-        // handleFetchUsers().then((snapshot) => {
-        //     snapshot..forEach(function (childSnapshot) {
-        //         setUsersDatabase(usersDatabase => [...usersDatabase, childSnapshot]);
-
-        //     });
-        //     console.log(usersDatabase);
-        // })
     }, []);
 
     // Get userType from database
 
-    const handleFetchUsers = () => {
-        return new Promise((resolve, reject) => {
-            const db = getDatabase();
-            const reference = ref(db, '/users/');
+    const handleFetchUser = () => {
 
-            get(reference).then((snapshot) => {
-                if (snapshot.exists) {
-                    resolve(snapshot);
-                } else {
-                    console.log('no ay');
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
+        const db = getDatabase();
+        const userUID = getAuth().currentUser.uid;
+        const reference = ref(db, '/users/' + userUID + '/userName/');
+
+        get(reference).then((snapshot) => {
+            if (snapshot.exists) {
+                const userSnapshot = snapshot.val();
+                return userSnapshot;
+            } else {
+                return false;
+            }
+        }).catch((error) => {
+            console.error(error);
         });
+
     }
 
     // Logout for navheader
@@ -113,6 +116,16 @@ const HomePageVolunteer = ({ navigation }) => {
 
     }
 
+    // Navigates to the chat
+
+    const handleNavigateChat = () => {
+        navigation.navigate("ChatPage");
+    }
+
+    // if (!currentVolunteer) {
+    //     return <AppLoading />;
+    // }
+
     return (
         <>
             <View style={styles.headerContainer}>
@@ -121,7 +134,7 @@ const HomePageVolunteer = ({ navigation }) => {
             </View>
 
             <View style={styles.container}>
-                <Text>¡Bienvenido, voluntario!</Text>
+                <Text style={styles.volunteerTitle}>{(currentVolunteer) ? `¡Bienvenido, ${currentVolunteer}!` : `¡Buenas tardes!`}</Text>
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -209,7 +222,7 @@ const HomePageVolunteer = ({ navigation }) => {
                                 <Image style={styles.notificationIcon} source={require('../resources/img/ic_round-notifications.png')} />
                                 <View style={styles.notificationTextContainer}>
                                     <Text style={styles.notificationHeadline}>{(user.responses.status == 'sent' ? `${user.userName} ha subido una actualización` : `${user.userName} se ha creado una cuenta nueva`)}</Text>
-                                    <Text style={[styles.statusPending, styles.plaintext]}>Estado:</Text>
+                                    <Text style={[styles.statusPending, styles.plaintext]}>Form:</Text>
                                     <Text style={(user.responses.status == 'sent' ? styles.statusSent : styles.statusPending)}>{(user.responses.status == 'sent' ? 'Enviado' : 'Pendiente')}</Text>
 
                                     {(user.responses.status == 'sent')
@@ -248,6 +261,13 @@ const HomePageVolunteer = ({ navigation }) => {
                     </View>
                 ))}
 
+                <TouchableOpacity
+                    onPress={handleNavigateChat}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonText}>Ir al chat</Text>
+                </TouchableOpacity>
+
             </View>
         </>
     );
@@ -256,7 +276,7 @@ const HomePageVolunteer = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '80%',
+        width: '90%',
         height: '100%',
         alignSelf: 'center',
         alignItems: 'center',
@@ -265,10 +285,16 @@ const styles = StyleSheet.create({
     headerContainer: {
         width: '100%'
     },
+    volunteerTitle: {
+        fontFamily: Fonts.Poppins.Bold,
+        fontSize: FontsSizes.title,
+        marginBottom: 30,
+        color: '#9b9b9b'
+    },
     button: {
         backgroundColor: '#FF7B36',
         width: '50%',
-        padding: 10,
+        padding: 5,
         borderRadius: 5,
         alignItems: 'center',
         alignSelf: 'flex-end',
@@ -276,8 +302,8 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        fontWeight: '700',
-        fontSize: 12
+        fontFamily: Fonts.Poppins.Bold,
+        fontSize: FontsSizes.paragraph
 
     },
     responseContainer: {
@@ -296,8 +322,8 @@ const styles = StyleSheet.create({
         alignContent: 'flex-end'
     },
     notificationIcon: {
-        height: 30,
-        width: 30,
+        height: 20,
+        width: 20,
         margin: 10,
         marginLeft: 0
 
@@ -311,6 +337,8 @@ const styles = StyleSheet.create({
 
     },
     notificationHeadline: {
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
         width: '100%',
         marginRight: 'auto',
         marginBottom: 5,
@@ -356,6 +384,7 @@ const styles = StyleSheet.create({
 
     },
     questionTitle: {
+        // pegar
         fontSize: 24,
         fontWeight: 'bold',
         color: '#A5A5A5',
@@ -393,15 +422,21 @@ const styles = StyleSheet.create({
     },
     statusSent: {
         color: '#3bc922',
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
         textDecorationLine: 'underline',
         alignSelf: 'center'
     },
     statusPending: {
         color: '#bfa812',
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
         textDecorationLine: 'underline',
         alignSelf: 'center'
     },
     plaintext: {
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
         textDecorationLine: 'none',
         color: '#000'
     }

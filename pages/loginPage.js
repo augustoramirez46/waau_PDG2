@@ -8,6 +8,9 @@ import { authentication } from '../firebase';
 import { getDatabase, ref, set, get, update, remove, child } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 
+// Styles
+import { Fonts, FontsSizes } from "../config/useFonts.js";
+
 
 const LoginPage = ({ navigation }) => {
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -200,8 +203,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     loginTitle: {
-        fontWeight: 'bold',
-        fontSize: 16,
+        fontFamily: Fonts.Poppins.Bold,
+        fontSize: FontsSizes.subtitle,
         marginBottom: 10,
         color: '#808080',
 
@@ -216,6 +219,8 @@ const styles = StyleSheet.create({
         width: '80%'
     },
     input: {
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
         backgroundColor: 'white',
         paddingHorizontal: 15,
         paddingVertical: 10,
@@ -238,9 +243,9 @@ const styles = StyleSheet.create({
 
     },
     buttonText: {
+        fontFamily: Fonts.Poppins.Bold,
+        fontSize: FontsSizes.paragraph,
         color: 'white',
-        fontWeight: '700',
-        fontSize: 16
 
     },
     buttonOutline: {
@@ -251,6 +256,8 @@ const styles = StyleSheet.create({
 
     },
     buttonOutlineText: {
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
         color: '#FF7B36',
         fontWeight: '400',
     },
