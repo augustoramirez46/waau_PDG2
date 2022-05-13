@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Image, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Image, Alert, Pressable } from 'react-native';
 
 const NavHeader = (props) => {
-
 
     const handleIntermediateCallLogOut = () => {
         props.handleCallLogOut()
@@ -14,12 +13,12 @@ const NavHeader = (props) => {
         >
             <Image style={styles.containerBg} source={require('../resources/img/headerNav.png')} />
 
-            <TouchableOpacity
+            <Pressable
                 style={styles.img}
                 onPress={handleIntermediateCallLogOut}
             >
                 <Image style={styles.imgInside} source={require('../resources/img/ic_round-power-settings-new.png')} />
-            </TouchableOpacity>
+            </Pressable>
             <Image style={styles.imgLogo} source={require('../resources/img/icon_transp.png')} />
             <Image style={styles.img} source={require('../resources/img/ic_round-menu.png')} />
         </View>
@@ -31,13 +30,9 @@ const styles = StyleSheet.create({
     container: {
         height: '15%',
         width: '100%',
-        position: 'absolute',
-        top: 0,
-        left: 0,
         flex: 1,
         flexDirection: 'row',
         paddingTop: 60,
-
         justifyContent: 'space-between'
     },
     containerBg: {
@@ -52,11 +47,12 @@ const styles = StyleSheet.create({
         height: 35,
         marginLeft: 20,
         marginRight: 20,
-
+        zIndex: 1
     },
     imgInside: {
         width: 35,
         height: 35,
+        zIndex: 1
 
     },
     imgLogo: {

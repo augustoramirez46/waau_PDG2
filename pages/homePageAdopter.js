@@ -5,22 +5,14 @@ import NavHeader from '../components/navHeader';
 // Firebase
 import { signOut } from 'firebase/auth';
 import { authentication } from '../firebase';
-
-
+import TabBarAdopter from '../tabs/homePageAdopterTabs/homeTab/tabBarAdopter';
 
 const HomePageAdopter = ({ navigation }) => {
-
-    const handleNavigateForm = () => {
-        navigation.navigate("Form");
-    }
-
-    const handleNavigateChat = () => {
-        navigation.navigate("ChatPage");
-    }
 
     // Logout for navheader
 
     const handleLogOut = () => {
+        console.log('clickeao');
         signOut(authentication)
             .then((re) => {
                 navigation.navigate("Login");
@@ -29,30 +21,22 @@ const HomePageAdopter = ({ navigation }) => {
     }
 
     return (
-        <>
+        <View style={styles.homeContainer}>
+            <TabBarAdopter />
             <View style={styles.headerContainer}>
                 <NavHeader handleCallLogOut={handleLogOut}></NavHeader>
             </View>
+        </View>
 
-            <View style={styles.container}>
-                <Text>Adoptante</Text>
-                <TouchableOpacity
-                    onPress={handleNavigateForm}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Ir al formulario</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={handleNavigateChat}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Ir al chat</Text>
-                </TouchableOpacity>
-            </View></>
+
     );
 
 }
 const styles = StyleSheet.create({
+    homeContainer: {
+        flex: 1,
+
+    },
     container: {
         flex: 1,
         width: '80%',
@@ -61,6 +45,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     headerContainer: {
+        zIndex: 1,
+        position: 'absolute',
+        top: 0,
+        left: 0,
         width: '100%'
     },
     button: {
