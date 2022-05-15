@@ -1,6 +1,8 @@
 import { Dimensions, StyleSheet, Text, View, ScrollView } from 'react-native';
 import React, { useState, useRef } from 'react';
-import { setStatusBarHidden } from 'expo-status-bar'
+import { setStatusBarHidden } from 'expo-status-bar';
+
+import * as ScreenOrientation from 'expo-screen-orientation'
 
 // Video
 import { Video } from 'expo-av';
@@ -19,7 +21,16 @@ const VideoTabCourse = () => {
     const refScrollView = useRef(null);
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView
+            contentContainerStyle={styles.container}
+            scrollEnabled={true}
+            ref={refScrollView}
+            onContentSizeChange={() => {
+                if (inFullscreen2) {
+                    refScrollView.current.scrollToEnd({ animated: true })
+                }
+            }}
+        >
             <Text style={styles.title}>Cursos</Text>
             <View style={styles.finderContainer}>
                 <Ionicons
@@ -35,9 +46,7 @@ const VideoTabCourse = () => {
                 videoProps={{
                     shouldPlay: false,
                     resizeMode: Video.RESIZE_MODE_CONTAIN,
-                    source: {
-                        uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-                    },
+                    source: require('../../../resources/videos/Video1Bienvenida.mp4'),
                     useNativeControls: true,
                     ref: refVideo2,
                 }}
@@ -46,7 +55,7 @@ const VideoTabCourse = () => {
                     enterFullscreen: async () => {
                         setStatusBarHidden(true, 'fade')
                         setInFullsreen2(!inFullscreen2)
-                        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT)
+                        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT)
                         refVideo2.current.setStatusAsync({
                             shouldPlay: true,
                         })
@@ -58,13 +67,13 @@ const VideoTabCourse = () => {
                     },
                 }}
                 style={{
-                    height: inFullscreen2 ? Dimensions.get('window').width : 160,
-                    width: inFullscreen2 ? Dimensions.get('window').height : 320,
+                    height: inFullscreen2 ? Dimensions.get('screen').width : 160,
+                    width: inFullscreen2 ? Dimensions.get('screen').height : 320,
+                    marginBottom: 10,
                     videoBackgroundColor: '#cfcfcf',
-
-
                 }}
             />
+
         </ScrollView>
     )
 }

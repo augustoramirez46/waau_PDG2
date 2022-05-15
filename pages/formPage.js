@@ -5,6 +5,7 @@ import { RadioGroup, RadioButton } from 'react-native-radio-buttons-group';
 
 import { getDatabase, ref, set, get, update, remove, child } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
+import { Fonts, FontsSizes } from "../config/useFonts.js";
 
 const FormPage = ({ navigation }) => {
     const [form, setForm] = useState([
@@ -44,9 +45,81 @@ const FormPage = ({ navigation }) => {
         },
         {
             key: 4,
-            question: "¿Pregunta abierta 2?",
-            options: [],
-            isOpenEnded: true,
+            question: "¿Tú o las personas que viven contigo son alérgicos a los perros?",
+            options: ["Si", "No"],
+            isOpenEnded: false,
+            response: "",
+            questionType: "default",
+        },
+        {
+            key: 5,
+            question: "¿Tu casa es propia o de alquiler?",
+            options: ["Propia", "Alquiler"],
+            isOpenEnded: false,
+            response: "",
+            questionType: "default",
+        },
+        {
+            key: 6,
+            question: "¿Vives con niños o ancianos?",
+            options: ["Si", "No"],
+            isOpenEnded: false,
+            response: "",
+            questionType: "default",
+        },
+        {
+            key: 7,
+            question: "¿Qué tipo de pelo quieres que tenga tu perro?",
+            options: ["Pelo corto", "Pelo medio", "Pelo largo", "No importa"],
+            isOpenEnded: false,
+            response: "",
+            questionType: "default",
+        },
+        {
+            key: 8,
+            question: "¿En qué etapa de vida quieres que esté tu perro?",
+            options: ["Cachorro", "Adulto", "Anciano", "No importa"],
+            isOpenEnded: false,
+            response: "",
+            questionType: "default",
+        },
+        {
+            key: 9,
+            question: "¿Qué tamaño desearías para tu perro?",
+            options: ["Pequeño", "Mediano", "Grande", "No importa"],
+            isOpenEnded: false,
+            response: "",
+            questionType: "default",
+        },
+        {
+            key: 10,
+            question: "¿Cuánto tiempo planeas dedicarle a tu perro diariamente?",
+            options: ["0 a 3 horas", "4 a 7 horas", "Más de 8 horas"],
+            isOpenEnded: false,
+            response: "",
+            questionType: "default",
+        },
+        {
+            key: 11,
+            question: "¿Dónde deben realizar sus necesidades los perros?: defecar y orinar.",
+            options: ["Dentro de mi casa", "El patio de mi casa", "Jardín", "En el parque", "Ninguna de las anteriores"],
+            isOpenEnded: false,
+            response: "",
+            questionType: "default",
+        },
+        {
+            key: 12,
+            question: "¿Qué harías con la materia fecal de tu perro?",
+            options: ["Lo dejo donde está", "Lo recojo con una bolsa y lo desecho en la basura", "Lo lavo y deshecho por la cañería"],
+            isOpenEnded: false,
+            response: "",
+            questionType: "default",
+        },
+        {
+            key: 13,
+            question: "¿Cuánto tiempo planeas dedicarle a tu perro diariamente?",
+            options: ["0 a 3 horas", "4 a 7 horas", "Más de 8 horas"],
+            isOpenEnded: false,
             response: "",
             questionType: "default",
         },
@@ -157,10 +230,16 @@ const styles = StyleSheet.create({
     formTitle: {
         alignSelf: 'center',
         margin: 10,
+        color: '#FF7B36',
+        fontFamily: Fonts.Poppins.SemiBold,
+        fontSize: FontsSizes.title,
+        textAlign: 'center'
     },
     questionTitle: {
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontFamily: Fonts.Poppins.Bold,
+        fontSize: FontsSizes.title,
+        textAlign: 'left',
+        lineHeight: 30,
         color: '#A5A5A5',
         paddingLeft: 10,
         marginBottom: 10
@@ -177,8 +256,8 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        fontWeight: '700',
-        fontSize: 16
+        fontFamily: Fonts.Poppins.Bold,
+        fontSize: FontsSizes.paragraph,
 
     },
     questionContainer: {
@@ -192,18 +271,24 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         marginBottom: 5,
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
     },
     option: {
         padding: 17,
         borderWidth: 1,
         borderColor: '#c8c8c8',
         borderRadius: 5,
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
     },
     option__selected: {
         padding: 17,
         borderRadius: 5,
         backgroundColor: '#FF7B36',
-        color: '#ffffff',
+        color: 'white',
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph
     }
 });
 

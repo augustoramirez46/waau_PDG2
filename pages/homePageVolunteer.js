@@ -19,9 +19,7 @@ const HomePageVolunteer = ({ navigation }) => {
     const [currentForm, setCurrentForm] = useState(false);
     const [userRated, setUserRated] = useState(false);
     const [currentVolunteer, setCurrentVolunteer] = useState(false);
-    const [state, setState] = useState({
-        isReady: false,
-    });
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
 
@@ -41,9 +39,7 @@ const HomePageVolunteer = ({ navigation }) => {
 
         });
 
-        let vName = handleFetchUser();
-        console.log(vName);
-        setCurrentVolunteer(vName);
+        handleFetchUser();
 
     }, []);
 
@@ -53,19 +49,20 @@ const HomePageVolunteer = ({ navigation }) => {
 
         const db = getDatabase();
         const userUID = getAuth().currentUser.uid;
-        const reference = ref(db, '/users/' + userUID + '/userName/');
+        const reference = ref(db, '/users/' + userUID);
 
-        get(reference).then((snapshot) => {
+        onValue(reference, (snapshot) => {
             if (snapshot.exists) {
-                const userSnapshot = snapshot.val();
-                return userSnapshot;
-            } else {
-                return false;
-            }
-        }).catch((error) => {
-            console.error(error);
-        });
+                const data = snapshot.val();
+                // console.log(data);
+                if (data != null) {
+                    setCurrentVolunteer([]);
 
+                    setCurrentVolunteer(data);
+                    setIsLoaded(true)
+                }
+            }
+        })
     }
 
     // Logout for navheader
@@ -126,6 +123,10 @@ const HomePageVolunteer = ({ navigation }) => {
     //     return <AppLoading />;
     // }
 
+    if (!isLoaded) {
+        return <AppLoading />
+    }
+
     return (
         <>
             <View style={styles.headerContainer}>
@@ -134,7 +135,8 @@ const HomePageVolunteer = ({ navigation }) => {
             </View>
 
             <View style={styles.container}>
-                <Text style={styles.volunteerTitle}>{(currentVolunteer) ? `¡Bienvenido, ${currentVolunteer}!` : `¡Buenas tardes!`}</Text>
+                <Text style={styles.volunteerTitle}>{(currentVolunteer) ? `¡Buenas tardes ${currentVolunteer.userName}!` : `¡Buenas tardes!`}</Text>
+                <Text style={styles.volunteerSubtitle}>Actualizaciones recientes:</Text>
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -290,6 +292,13 @@ const styles = StyleSheet.create({
         fontSize: FontsSizes.title,
         marginBottom: 30,
         color: '#9b9b9b'
+    },
+    volunteerSubtitle: {
+        fontFamily: Fonts.Poppins.SemiBold,
+        fontSize: FontsSizes.paragraph,
+        color: '#a3a3a3',
+        alignSelf: 'flex-start',
+        marginBottom: 20
     },
     button: {
         backgroundColor: '#FF7B36',
