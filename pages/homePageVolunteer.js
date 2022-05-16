@@ -6,6 +6,7 @@ import AppLoading from "expo-app-loading";
 
 // Styles
 import { Fonts, FontsSizes } from "../config/useFonts.js";
+import { Ionicons } from '@expo/vector-icons';
 
 // Firebase
 import { signOut, getAuth } from 'firebase/auth';
@@ -95,14 +96,14 @@ const HomePageVolunteer = ({ navigation }) => {
         switch (grade) {
             case 'failed':
                 update(reference, {
-                    status: grade
+                    status: 'failed'
                 });
 
                 break;
 
             case 'approved':
                 update(reference, {
-                    status: grade
+                    status: 'approved'
                 });
                 break;
             default:
@@ -195,21 +196,34 @@ const HomePageVolunteer = ({ navigation }) => {
                                 style={[styles.buttonMod, styles.buttonRej]}
                                 onPress={() => handleRateUser('failed')}
                             >
-                                <Text style={styles.buttonText}>Reprobar adoptante</Text>
+                                <Ionicons
+                                    name="close-circle-outline"
+                                    color={"white"}
+                                    size={25}
+                                />
                             </Pressable>
 
                             <Pressable
                                 style={[styles.buttonMod, styles.buttonClose]}
                                 onPress={() => setModalVisible(!modalVisible)}
                             >
-                                <Text style={styles.buttonText}>Cerrar</Text>
+                                <Ionicons
+                                    name="exit-outline"
+                                    color={"white"}
+                                    size={25}
+                                />
                             </Pressable>
 
                             <Pressable
                                 style={[styles.buttonMod, styles.buttonApp]}
                                 onPress={() => handleRateUser('approved')}
                             >
-                                <Text style={styles.buttonText}>Aprobar adoptante</Text>
+
+                                <Ionicons
+                                    name="checkmark-circle-outline"
+                                    color={"white"}
+                                    size={25}
+                                />
                             </Pressable>
 
                         </View>
@@ -372,8 +386,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#d2d2d2'
     },
     buttonMod: {
-        borderRadius: 10,
-        padding: 10,
+        borderRadius: 50,
+        padding: 20,
         elevation: 2,
         marginLeft: 5,
         marginRight: 5
@@ -389,13 +403,17 @@ const styles = StyleSheet.create({
     },
     modalButtonContainer: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        width: '100%',
+        alignContent: 'space-around',
+        justifyContent: 'space-around'
 
     },
     questionTitle: {
         // pegar
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontFamily: Fonts.Poppins.Bold,
+        fontSize: FontsSizes.title,
+        width: 300,
         color: '#A5A5A5',
         paddingLeft: 10,
         marginBottom: 10
@@ -411,8 +429,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         marginBottom: 5,
-        fontSize: 20,
-        fontWeight: '700',
+        fontFamily: Fonts.Poppins.SemiBold,
+        fontSize: FontsSizes.subtitle,
         marginLeft: 'auto',
         marginRight: 'auto'
 

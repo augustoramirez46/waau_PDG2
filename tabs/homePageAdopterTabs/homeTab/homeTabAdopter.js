@@ -69,7 +69,7 @@ const HomeTabAdopter = ({ navigation }) => {
             <Text style={styles.title}>{`¡Buenas tardes ${currentAdopter.userName}!`}</Text>
 
             {images.map((badge) => (
-                (currentAdopter.responses.status != '') ?
+                (currentAdopter.responses.status != undefined) ?
                     badge.id == currentAdopter.responses.status ?
                         <View>
                             <Image source={badge.image} />
@@ -83,17 +83,33 @@ const HomeTabAdopter = ({ navigation }) => {
             ))}
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={handleNavigateForm}
-                    style={styles.button}
-                >
-                    <Ionicons
-                        name="archive-outline"
-                        color={"#FF7B36"}
-                        size={25}
-                    />
-                    <Text style={styles.buttonText}>Ir al formulario</Text>
-                </TouchableOpacity>
+                {(currentAdopter.responses.status == "failed") ?
+                    <View
+
+                        style={[styles.button, styles.buttonInactive]}
+                    >
+                        <Ionicons
+                            name="archive-outline"
+                            color={"lightgray"}
+                            size={25}
+                        />
+                        <Text style={[styles.buttonText, styles.buttonTextInactive]}>Ir al formulario</Text>
+                    </View>
+
+                    :
+                    <TouchableOpacity
+                        onPress={handleNavigateForm}
+                        style={styles.button}
+                    >
+                        <Ionicons
+                            name="archive-outline"
+                            color={"#FF7B36"}
+                            size={25}
+                        />
+                        <Text style={styles.buttonText}>Ir al formulario</Text>
+                    </TouchableOpacity>
+                }
+
                 <TouchableOpacity
                     onPress={handleNavigateChat}
                     style={styles.button}
@@ -152,6 +168,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    buttonInactive: {
+        borderColor: 'lightgray',
+
+    },
     buttonText: {
         color: 'gray',
         textAlign: 'center',
@@ -159,6 +179,9 @@ const styles = StyleSheet.create({
         fontSize: FontsSizes.paragraph,
 
     },
+    buttonTextInactive: {
+        color: 'gray',
+    }
 });
 
 export default HomeTabAdopter
