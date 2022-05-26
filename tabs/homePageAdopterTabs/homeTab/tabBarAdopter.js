@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import VideoTabCourse from './videoTabCourse';
 import HomeTabAdopter from './homeTabAdopter';
+import SubmitTabAdopter from './submitTabAdopter';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -25,6 +26,29 @@ const TabBarAdopter = ({ navigation }) => {
             backBehavior='order'
 
         >
+            <Tab.Screen
+                name="VideoTab"
+                component={VideoTabCourse}
+                options={{
+                    tabBarLabel: 'Curso',
+                    tabBarIcon: ({ focused, color }) => (
+                        <Ionicons
+                            name="videocam"
+                            color={focused ? "#FF7B36" : "gray"}
+                            size={25}
+                        />
+                    ),
+                    headerStatusBarHeight: 60,
+
+                    tabBarLabelStyle: {
+                        fontFamily: Fonts.Poppins.Regular,
+                        fontSize: 12,
+                        color: 'gray'
+
+                    },
+
+                }}
+            />
             <Tab.Screen
                 name="AdopterHomePageTab"
                 component={HomeTabAdopter}
@@ -49,13 +73,13 @@ const TabBarAdopter = ({ navigation }) => {
                 }}
             />
             <Tab.Screen
-                name="VideoTab"
-                component={VideoTabCourse}
+                name="SubmitTabAdopter"
+                component={SubmitTabAdopter}
                 options={{
-                    tabBarLabel: 'Curso',
+                    tabBarLabel: 'Seguimiento',
                     tabBarIcon: ({ focused, color }) => (
                         <Ionicons
-                            name="videocam"
+                            name="document-text-outline"
                             color={focused ? "#FF7B36" : "gray"}
                             size={25}
                         />
@@ -71,6 +95,7 @@ const TabBarAdopter = ({ navigation }) => {
 
                 }}
             />
+
         </Tab.Navigator>
     )
 }
