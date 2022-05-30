@@ -1,16 +1,18 @@
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, KeyboardAvoidingView, TextInput, Alert } from 'react-native';
 import React, { useState, useRef } from 'react';
 
 import { Ionicons } from '@expo/vector-icons';
+import { getDatabase, ref, set, get, update, remove, child } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
 // Styles
 import { Fonts, FontsSizes } from "../../../config/useFonts.js";
 
-const SubmitTabAdopter = () => {
+const SubmitTabAdopter = ({ navigation }) => {
     const [submission, setSubmission] = useState([
         {
             key: 0,
-            title: "¿Como te has sentido esta semana?",
+            title: "¿Cómo te has sentido esta semana?",
             options: [1, 2, 3, 4],
             response: 0,
             textResponse: ""
@@ -22,8 +24,8 @@ const SubmitTabAdopter = () => {
             response: 0,
             textResponse: ""
         }
-    ])
-
+    ]);
+    const [sent, setIsSent] = useState(false);
     const emojis = [
         {
             id: '1',
@@ -63,6 +65,46 @@ const SubmitTabAdopter = () => {
         },
     ]
 
+    const handleSubmitSubmission = () => {
+        const db = getDatabase();
+        const userUID = getAuth().currentUser.uid;
+        const reference = ref(db, '/users/' + userUID + '/submissions/' + '/first/');
+
+        update(reference, {
+            submission
+        });
+
+        createOneButtonAlert();
+        setIsSent(true)
+    }
+
+    // Alert 
+
+    const createOneButtonAlert = () =>
+
+        Alert.alert(
+            "¡Súper!",
+            "Ha sido enviado el reporte exitosamente",
+            [
+                { text: "Ok", onPress: () => console.log("OK Pressed") }
+            ]
+        );
+
+
+
+    const handleInput = (key, response) => {
+        const clone = JSON.parse(JSON.stringify(submission));
+        clone[key].textResponse = response;
+        setSubmission(clone);
+    }
+
+    const handleEmoji = (key, emoji) => {
+        const clone = JSON.parse(JSON.stringify(submission));
+        clone[key].response = emoji;
+        setSubmission(clone);
+        console.log(submission)
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Reporte de estado</Text>
@@ -78,15 +120,55 @@ const SubmitTabAdopter = () => {
                         >
                             {section.title}
                         </Text>
-                        {section.options.map((elem) => (
-                            <View>
-                                <Image source={emojis[elem - 1].image} />
-                            </View>
-                        ))}
+                        <View style={styles.emojiContainer}>
+                            {section.options.map((elem) => (
+
+                                <TouchableOpacity
+                                    onPress={() => handleEmoji(section.key, elem)}
+                                >
+                                    <Image source={
+                                        section.response == elem
+                                            ? selectedEmoji[elem - 1].image
+                                            :
+                                            emojis[elem - 1].image} />
+                                </TouchableOpacity>
+
+                            ))}
+                        </View>
+                        <KeyboardAvoidingView
+                            behavior='padding'
+                        >
+                            <TextInput
+                                placeholder='Explicanos un poco el porque'
+                                value={section.textResponse}
+                                onChangeText={text => handleInput(section.key, text)}
+                                style={styles.input}
+                            ></TextInput>
+                        </KeyboardAvoidingView>
 
                     </View>
 
                 ))}
+                <View style={styles.bottomsubmit}>
+                    <View style={styles.attachContainer}>
+                        <Text style={styles.text}>Adjuntar foto del can:</Text>
+                        <TouchableOpacity style={styles.attachButton}>
+                            <Ionicons
+                                name="document-attach-outline"
+                                color={"#FF7B36"}
+                                size={25}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity
+                        onPress={() => handleSubmitSubmission()}
+                        style={styles.button}
+                    >
+                        <Text
+                            style={styles.buttonText}
+                        >Enviar reporte</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )
@@ -123,12 +205,26 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         paddingLeft: 10
     },
+    emojiContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '90%',
+        padding: 5,
+        borderRadius: 10,
+        marginTop: 5,
+        marginBottom: 5,
+        backgroundColor: '#F9FBE7',
+        justifyContent: 'space-around',
+        alignSelf: 'center'
+    },
     text: {
         fontFamily: Fonts.Poppins.Regular,
         fontSize: FontsSizes.paragraph,
-        color: '#cecece',
+        textAlign: 'center',
+        color: '#6c6774',
         marginLeft: 10,
-        paddingTop: 2
+        paddingTop: 2,
+        alignSelf: 'center'
 
     },
     submissionContainer: {
@@ -142,5 +238,57 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         height: '90%',
         width: '90%'
-    }
+    },
+    submissionQuestion: {
+        width: '90%',
+        marginBottom: 15
+    },
+    button: {
+        backgroundColor: '#FF7B36',
+        width: '100%',
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderRadius: 10,
+        marginTop: 15,
+        alignItems: 'center',
+        alignSelf: 'center',
+        width: 200
+
+    },
+    buttonText: {
+        fontFamily: Fonts.Poppins.Bold,
+        fontSize: FontsSizes.paragraph,
+        color: 'white',
+
+
+    },
+    attachContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 10,
+        marginBottom: 10
+    },
+    attachButton: {
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#FF7B36',
+        width: 80,
+        alignItems: 'center',
+        marginLeft: 10,
+        padding: 1,
+        borderRadius: 5
+    },
+    input: {
+        backgroundColor: 'white',
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+        borderRadius: 10,
+        marginTop: 5,
+        marginBottom: 5,
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph,
+        width: '100%'
+    },
 })

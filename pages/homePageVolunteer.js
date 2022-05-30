@@ -120,6 +120,10 @@ const HomePageVolunteer = ({ navigation }) => {
         navigation.navigate("ChatPage");
     }
 
+    const handleNavigateSubmissions = () => {
+        navigation.navigate("CheckSubmission");
+    }
+
     // if (!currentVolunteer) {
     //     return <AppLoading />;
     // }
@@ -276,14 +280,37 @@ const HomePageVolunteer = ({ navigation }) => {
                         }
                     </View>
                 ))}
+                <View style={styles.bottomNav}>
 
-                <TouchableOpacity
-                    onPress={handleNavigateChat}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Ir al chat</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={handleNavigateSubmissions}
+                        style={styles.buttonOutline}
+                    >
 
+                        <Ionicons
+                            name="document-text-outline"
+                            color={"#FF7B36"}
+                            size={25}
+                        />
+                        <Text style={styles.bottomNavText}>
+                            Reportes
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={handleNavigateChat}
+                        style={styles.buttonOutline}
+                    >
+                        <Ionicons
+                            name="chatbox-ellipses-outline"
+                            color={"#FF7B36"}
+                            size={25}
+                        />
+                        <Text style={styles.bottomNavText}>
+                            Chats
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </>
     );
@@ -319,6 +346,16 @@ const styles = StyleSheet.create({
         width: '50%',
         padding: 5,
         borderRadius: 5,
+        alignItems: 'center',
+        alignSelf: 'flex-end',
+
+    },
+    buttonOutline: {
+        borderColor: '#FF7B36',
+        width: '45%',
+        padding: 5,
+        borderRadius: 5,
+        borderWidth: 1,
         alignItems: 'center',
         alignSelf: 'flex-end',
 
@@ -467,6 +504,18 @@ const styles = StyleSheet.create({
         fontSize: FontsSizes.paragraph,
         textDecorationLine: 'none',
         color: '#000'
+    },
+    bottomNav: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between'
+    },
+    bottomNavText: {
+        color: 'gray',
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.paragraph
+
     }
 });
 export default HomePageVolunteer;

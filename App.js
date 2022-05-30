@@ -37,6 +37,7 @@ import LoginPage from "./pages/loginPage";
 import FormPage from "./pages/formPage";
 import RegisterPage from "./pages/registerPage";
 import ChatPage from './pages/chatPage';
+import CheckSubmissionVolunteer from './pages/checkSubmissionVolunteer';
 
 // Ignore logs
 import { LogBox } from "react-native";
@@ -89,6 +90,7 @@ export default function App() {
         <Stack.Screen name="HomeAdopter" options={{ headerShown: false }} component={HomePageAdopter} />
         <Stack.Screen name="HomeVolunteer" options={{ headerShown: false }} component={HomePageVolunteer} />
         <Stack.Screen name="ChatPage" options={{ headerShown: true, headerBackButtonMenuEnabled: true, title: "Chat" }} component={ChatPage} />
+        <Stack.Screen name="CheckSubmission" options={{ headerShown: true, headerBackButtonMenuEnabled: true, title: "Reportes" }} component={CheckSubmissionVolunteer} />
       </Stack.Navigator>
     </NavigationContainer>
   );

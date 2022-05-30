@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, KeyboardAvoidingView, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native'
 import { StatusBar } from 'react-native';
 import { RadioGroup, RadioButton } from 'react-native-radio-buttons-group';
 
@@ -245,8 +245,21 @@ const FormPage = ({ navigation }) => {
             form
         });
 
-        navigation.navigate("HomeAdopter");
+        createOneButtonAlert();
+
     }
+
+    // Alert 
+
+    const createOneButtonAlert = () =>
+
+        Alert.alert(
+            "¡Súper!",
+            "Ha sido enviado el pre-diagnostico exitosamente",
+            [
+                { text: "Ok", onPress: () => navigation.navigate("HomeAdopter") }
+            ]
+        );
 
 
     return (

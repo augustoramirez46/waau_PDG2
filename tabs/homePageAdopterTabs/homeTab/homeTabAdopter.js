@@ -58,7 +58,7 @@ const HomeTabAdopter = ({ navigation }) => {
 
     const handleNavigateChat = () => {
         navigation.navigate("ChatPage");
-        console.log(currentAdopter);
+
     }
 
     if (!isLoaded) {
@@ -83,7 +83,7 @@ const HomeTabAdopter = ({ navigation }) => {
             ))}
 
             <View style={styles.buttonContainer}>
-                {(currentAdopter.responses.status == "failed") ?
+                {(currentAdopter.responses.status == "failed" || currentAdopter.responses.status == "sent") ?
                     <View
 
                         style={[styles.button, styles.buttonInactive]}
