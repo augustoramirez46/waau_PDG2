@@ -99,28 +99,32 @@ const HomeTabAdopter = ({ navigation }) => {
                     :
                     <TouchableOpacity
                         onPress={handleNavigateForm}
-                        style={styles.button}
+                        style={[styles.button, styles.buttonWidth]}
                     >
                         <Ionicons
                             name="archive-outline"
                             color={"#FF7B36"}
                             size={25}
                         />
-                        <Text style={styles.buttonText}>Ir al formulario</Text>
+                        <Text style={styles.buttonText}>Ir al pre-diagnóstico</Text>
                     </TouchableOpacity>
                 }
 
-                <TouchableOpacity
-                    onPress={handleNavigateChat}
-                    style={styles.button}
-                >
-                    <Ionicons
-                        name="chatbox-ellipses-outline"
-                        color={"#FF7B36"}
-                        size={25}
-                    />
-                    <Text style={styles.buttonText}>Ir al chat</Text>
-                </TouchableOpacity>
+                {(currentAdopter.responses.status != 'pending') ?
+
+                    <TouchableOpacity
+                        onPress={handleNavigateChat}
+                        style={styles.button}
+                    >
+                        <Ionicons
+                            name="chatbox-ellipses-outline"
+                            color={"#FF7B36"}
+                            size={25}
+                        />
+                        <Text style={styles.buttonText}>Ir al chat</Text>
+                    </TouchableOpacity>
+                    :
+                    <></>}
             </View>
         </SafeAreaView>
 
@@ -171,6 +175,9 @@ const styles = StyleSheet.create({
     buttonInactive: {
         borderColor: 'lightgray',
 
+    },
+    buttonWidth: {
+        width: '100%'
     },
     buttonText: {
         color: 'gray',

@@ -13,14 +13,15 @@ const NavHeader = (props) => {
         >
             <Image style={styles.containerBg} source={require('../resources/img/headerNav.png')} />
 
+            <Image style={styles.img} source={require('../resources/img/ic_round-menu.png')} />
+            <Image style={styles.imgLogo} source={require('../resources/img/icon_transp.png')} />
             <Pressable
                 style={styles.img}
                 onPress={handleIntermediateCallLogOut}
             >
                 <Image style={styles.imgInside} source={require('../resources/img/ic_round-power-settings-new.png')} />
             </Pressable>
-            <Image style={styles.imgLogo} source={require('../resources/img/icon_transp.png')} />
-            <Image style={styles.img} source={require('../resources/img/ic_round-menu.png')} />
+
         </View>
 
     );
