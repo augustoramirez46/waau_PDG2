@@ -21,6 +21,7 @@ const HomePageVolunteer = ({ navigation }) => {
     const [userRated, setUserRated] = useState(false);
     const [currentVolunteer, setCurrentVolunteer] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [rng, setRng] = useState(1);
 
     useEffect(() => {
 
@@ -39,6 +40,10 @@ const HomePageVolunteer = ({ navigation }) => {
             }
 
         });
+
+        var number = Math.floor(Math.random() * (1 - 0 + 1)) + 0
+        setRng(number);
+        console.log(rng)
 
         handleFetchUser();
 
@@ -239,7 +244,29 @@ const HomePageVolunteer = ({ navigation }) => {
                         {(user.responses && (user.responses.status == 'sent' || user.responses.status == 'pending'))
                             ?
                             <View style={styles.responseContainer}>
-                                <Image style={styles.notificationIcon} source={require('../resources/img/ic_round-notifications.png')} />
+                                <View style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <Image style={styles.notificationIcon} source={require('../resources/img/ic_round-notifications.png')} />
+
+                                    {
+                                        (user.responses.status == 'sent')
+                                            ?
+                                            (rng == 1)
+                                                ?
+                                                <Ionicons
+                                                    name="star-half-sharp"
+                                                    color={"#FBC02D"}
+                                                    size={19}
+                                                />
+                                                :
+                                                <Ionicons
+                                                    name="star-sharp"
+                                                    color={"#8BC34A"}
+                                                    size={19}
+                                                />
+                                            :
+                                            <></>
+                                    }
+                                </View>
                                 <View style={styles.notificationTextContainer}>
                                     <Text style={styles.notificationHeadline}>{(user.responses.status == 'sent' ? `${user.userName} ha subido una actualización` : `${user.userName} se ha creado una cuenta nueva`)}</Text>
                                     <Text style={[styles.statusPending, styles.plaintext]}>Form:</Text>

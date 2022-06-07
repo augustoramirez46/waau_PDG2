@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 //React - Expo dependencies
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
@@ -35,6 +35,7 @@ import HomePageAdopter from "./pages/homePageAdopter";
 import HomePageVolunteer from "./pages/homePageVolunteer";
 import LoginPage from "./pages/loginPage";
 import FormPage from "./pages/formPage";
+import PrevSignup from "./pages/prevSignup"
 import RegisterPage from "./pages/registerPage";
 import ChatPage from './pages/chatPage';
 import CheckSubmissionVolunteer from './pages/checkSubmissionVolunteer';
@@ -49,6 +50,7 @@ LogBox.ignoreLogs(['Warning: Each child in a list should have a unique "key" pro
 // From the example
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
+// import { GlobalProvider, GlobalContext } from './global/globalContext';
 
 
 export default function App() {
@@ -74,17 +76,24 @@ export default function App() {
     Poppins_900Black_Italic,
   });
 
+  // const {
+  //   userTypeSignup,
+  //   setUserTypeSignup
+  // } = useContext(GlobalContext);
+
   if (!fontsLoaded) {
     return <AppLoading />;
   }
 
   return (
+
     <NavigationContainer
       style={styles.container}
       screenOptions={{ headerShown: false }}
     >
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginPage} />
+        <Stack.Screen name="PrevSignup" options={{ headerShown: true, headerBackButtonMenuEnabled: true, title: "Registro" }} component={PrevSignup} />
         <Stack.Screen name="Register" options={{ headerShown: true, headerBackButtonMenuEnabled: true, title: "Registro" }} component={RegisterPage} />
         <Stack.Screen name="Form" options={{ headerShown: true, headerBackButtonMenuEnabled: true, title: "Formulario" }} component={FormPage} />
         <Stack.Screen name="HomeAdopter" options={{ headerShown: false }} component={HomePageAdopter} />
@@ -93,6 +102,7 @@ export default function App() {
         <Stack.Screen name="CheckSubmission" options={{ headerShown: true, headerBackButtonMenuEnabled: true, title: "Reportes" }} component={CheckSubmissionVolunteer} />
       </Stack.Navigator>
     </NavigationContainer>
+
   );
 }
 

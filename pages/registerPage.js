@@ -1,17 +1,20 @@
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, Alert, Image, ScrollView } from 'react-native';
 import { StatusBar } from 'react-native';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AppLoading from 'expo-app-loading';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // Styles
 import { Fonts, FontsSizes } from "../config/useFonts.js";
 
+
 import { getDatabase, ref, set, get, update, remove, child } from 'firebase/database';
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword } from 'firebase/auth';
 import { authentication } from '../firebase';
 
+
 const RegisterPage = ({ navigation }) => {
+
 
     // Auth
     const [email, setEmail] = useState('');

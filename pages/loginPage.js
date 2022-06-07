@@ -53,7 +53,7 @@ const LoginPage = ({ navigation }) => {
     // Signup
 
     const handleSignUp = () => {
-        navigation.navigate("Register")
+        navigation.navigate("PrevSignup")
         return;
         if (userType == '') {
             createOneButtonAlert();

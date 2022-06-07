@@ -42,11 +42,12 @@ const VideoTabCourse = () => {
                     Busca cursos & lecciones
                 </Text>
             </View>
+            <Text style={styles.subtitle}>Inicio de necesidades</Text>
             <VideoPlayer
                 videoProps={{
                     shouldPlay: false,
                     resizeMode: Video.RESIZE_MODE_CONTAIN,
-                    source: require('../../../resources/videos/Video1Bienvenida.mp4'),
+                    source: require('../../../resources/videos/video01.mp4'),
                     useNativeControls: true,
                     ref: refVideo2,
                 }}
@@ -94,6 +95,11 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: Fonts.Poppins.Bold,
         fontSize: FontsSizes.title,
+        color: 'gray'
+    },
+    subtitle: {
+        fontFamily: Fonts.Poppins.SemiBold,
+        fontSize: FontsSizes.subtitle,
         color: 'gray'
     },
     finderContainer: {
