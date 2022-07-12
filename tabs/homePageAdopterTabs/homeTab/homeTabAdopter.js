@@ -74,7 +74,6 @@ const HomeTabAdopter = ({ navigation }) => {
                         <View>
                             <Image source={badge.image} />
 
-                            <Text style={styles.userNameBadge}>{currentAdopter.userName}</Text>
                         </View>
                         :
                         <></>
