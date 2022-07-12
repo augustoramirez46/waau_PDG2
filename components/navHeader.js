@@ -4,7 +4,11 @@ import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpaci
 const NavHeader = (props) => {
 
     const handleIntermediateCallLogOut = () => {
-        props.handleCallLogOut()
+        props.handleCallLogOut();
+    }
+
+    const handleIntermediateCallToChat = () => {
+        props.handleCallToChat();
     }
 
     return (
@@ -12,12 +16,16 @@ const NavHeader = (props) => {
             style={styles.container}
         >
             <Image style={styles.containerBg} source={require('../resources/img/headerNav.png')} />
-
-            <Image style={styles.img} source={require('../resources/img/ic_round-menu.png')} />
-            <Image style={styles.imgLogo} source={require('../resources/img/icon_transp.png')} />
             <Pressable
                 style={styles.img}
                 onPress={handleIntermediateCallLogOut}
+            >
+                <Image style={styles.img} source={require('../resources/img/ic_round-menu.png')} />
+            </Pressable>
+            <Image style={styles.imgLogo} source={require('../resources/img/icon_transp.png')} />
+            <Pressable
+                style={styles.img}
+                onPress={handleIntermediateCallToChat}
             >
                 <Image style={styles.imgInside} source={require('../resources/img/ic_round-power-settings-new.png')} />
             </Pressable>

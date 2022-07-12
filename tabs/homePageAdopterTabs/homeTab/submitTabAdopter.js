@@ -154,7 +154,7 @@ const SubmitTabAdopter = ({ navigation }) => {
                         <Text style={styles.text}>Adjuntar foto del can:</Text>
                         <TouchableOpacity style={styles.attachButton}>
                             <Ionicons
-                                name="document-attach-outline"
+                                name="camera-outline"
                                 color={"#FF7B36"}
                                 size={25}
                             />
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     emojiContainer: {
         display: 'flex',
         flexDirection: 'row',
-        width: '90%',
+        width: '100%',
         padding: 5,
         borderRadius: 10,
         marginTop: 5,
@@ -220,7 +220,8 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: Fonts.Poppins.Regular,
         fontSize: FontsSizes.paragraph,
-        textAlign: 'center',
+        textAlign: 'left',
+        width: '100%',
         color: '#6c6774',
         marginLeft: 10,
         paddingTop: 2,
@@ -233,11 +234,19 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 2,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: .01,
+        shadowRadius: 2,
+        elevation: 5,
         borderColor: '#cecece',
         borderRadius: 15,
-        height: '90%',
-        width: '90%'
+        paddingVertical: 15,
+        width: '90%',
+        backgroundColor: 'white'
     },
     submissionQuestion: {
         width: '90%',
@@ -268,10 +277,11 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        width: '50%'
     },
     attachButton: {
-        backgroundColor: 'white',
+        backgroundColor: '#FFE8CD',
         borderWidth: 1,
         borderColor: '#FF7B36',
         width: 80,
@@ -281,6 +291,14 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     input: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: .01,
+        shadowRadius: 2,
+        elevation: 2,
         backgroundColor: 'white',
         paddingHorizontal: 15,
         paddingVertical: 5,

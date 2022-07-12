@@ -86,14 +86,9 @@ const HomeTabAdopter = ({ navigation }) => {
                 {(currentAdopter.responses.status == "failed" || currentAdopter.responses.status == "sent") ?
                     <View
 
-                        style={[styles.button, styles.buttonInactive]}
+                        style={[styles.button, styles.buttonWidth, styles.buttonInactive]}
                     >
-                        <Ionicons
-                            name="archive-outline"
-                            color={"lightgray"}
-                            size={25}
-                        />
-                        <Text style={[styles.buttonText, styles.buttonTextInactive]}>Ir al formulario</Text>
+                        <Text style={[styles.buttonText, styles.buttonTextInactive]}>¡Gracias! en breve te notificaremos los resultados.</Text>
                     </View>
 
                     :
@@ -101,30 +96,12 @@ const HomeTabAdopter = ({ navigation }) => {
                         onPress={handleNavigateForm}
                         style={[styles.button, styles.buttonWidth]}
                     >
-                        <Ionicons
-                            name="archive-outline"
-                            color={"#FF7B36"}
-                            size={25}
-                        />
-                        <Text style={styles.buttonText}>Ir al pre-diagnóstico</Text>
+
+                        <Text style={styles.buttonText}>¡Queremos conocerte mejor!</Text>
                     </TouchableOpacity>
                 }
 
-                {(currentAdopter.responses.status != 'pending') ?
 
-                    <TouchableOpacity
-                        onPress={handleNavigateChat}
-                        style={styles.button}
-                    >
-                        <Ionicons
-                            name="chatbox-ellipses-outline"
-                            color={"#FF7B36"}
-                            size={25}
-                        />
-                        <Text style={styles.buttonText}>Ir al chat</Text>
-                    </TouchableOpacity>
-                    :
-                    <></>}
             </View>
         </SafeAreaView>
 
@@ -164,30 +141,51 @@ const styles = StyleSheet.create({
 
     },
     button: {
-        borderRadius: 20,
-        borderWidth: 2,
+        borderRadius: 10,
+        borderWidth: 1.5,
+        backgroundColor: '#FF7B36',
         borderColor: '#FF7B36',
         width: '40%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
         padding: 8,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginVertical: 15,
     },
     buttonInactive: {
-        borderColor: 'lightgray',
+        borderColor: 'lightgrey',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 0,
 
     },
     buttonWidth: {
         width: '100%'
     },
     buttonText: {
-        color: 'gray',
+        color: 'white',
         textAlign: 'center',
-        fontFamily: Fonts.Poppins.Regular,
-        fontSize: FontsSizes.paragraph,
+        fontFamily: Fonts.Poppins.Bold,
+        fontSize: FontsSizes.subtitle,
 
     },
     buttonTextInactive: {
         color: 'gray',
+        fontFamily: Fonts.Poppins.Regular,
+        fontSize: FontsSizes.subtitle,
     }
 });
 

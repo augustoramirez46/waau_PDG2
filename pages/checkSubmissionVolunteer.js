@@ -161,13 +161,9 @@ const CheckSubmissionVolunteer = () => {
                     {(user.responses && (user.responses.status == 'sent' || user.responses.status == 'pending'))
                         ?
                         <View style={styles.responseContainer}>
-                            <Ionicons
-                                name="search-circle-outline"
-                                color={"gray"}
-                                size={35}
-                            />
+
                             <View style={styles.notificationTextContainer}>
-                                <Text style={styles.notificationHeadline}>{(user.responses.status == 'sent' ? `${user.userName} ha subido una actualización` : `${user.userName} se ha creado una cuenta nueva`)}</Text>
+                                <Text style={styles.notificationHeadline}>{(user.responses.status == 'sent' ? `¡${user.userName} ha subido una actualización de su mascota!` : `${user.userName} se ha creado una cuenta nueva`)}</Text>
 
 
                                 {(user.submissions)
@@ -179,7 +175,7 @@ const CheckSubmissionVolunteer = () => {
                                         <Text
                                             style={styles.buttonText}
                                         >
-                                            REVISAR
+                                            Revisar.
                                         </Text>
                                     </TouchableOpacity>
                                     :
@@ -190,7 +186,7 @@ const CheckSubmissionVolunteer = () => {
                                         <Text
                                             style={styles.buttonText}
                                         >
-                                            REVISAR
+                                            Revisar.
                                         </Text>
                                     </View>
 
@@ -200,7 +196,6 @@ const CheckSubmissionVolunteer = () => {
                             </View>
                         </View>
                         :
-
                         <></>
                     }
                 </View>
@@ -264,16 +259,22 @@ const styles = StyleSheet.create({
     responseContainer: {
         display: 'flex',
         width: '80%',
-        borderWidth: 1,
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
-        borderColor: '#c0c0c0',
+        backgroundColor: 'white',
+        flexDirection: 'column',
         padding: 10,
         borderRadius: 5,
         paddingLeft: 15,
         marginBottom: 20,
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
 
     },
     notificationIcon: {
@@ -285,22 +286,20 @@ const styles = StyleSheet.create({
     },
     notificationTextContainer: {
         display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        flex: 1,
-        justifyContent: 'space-between'
+        flexDirection: 'column',
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignContent: 'center'
 
     },
     notificationHeadline: {
         fontFamily: Fonts.Poppins.Regular,
         fontSize: FontsSizes.paragraph,
-        width: '100%',
-        marginRight: 'auto',
+        textAlign: 'center',
         marginBottom: 5,
 
     },
     modalView: {
-
         margin: 20,
         backgroundColor: "white",
         borderRadius: 10,
@@ -328,12 +327,7 @@ const styles = StyleSheet.create({
     buttonClose: {
         backgroundColor: "#7d7d7d",
     },
-    buttonRej: {
-        backgroundColor: "#ef8787",
-    },
-    buttonApp: {
-        backgroundColor: "#b0eac8",
-    },
+
     modalButtonContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -372,6 +366,7 @@ const styles = StyleSheet.create({
         padding: 17,
         borderWidth: 1,
         borderColor: '#c8c8c8',
+        backgroundColor: 'white',
         borderRadius: 5,
     },
     option__selected: {
@@ -434,7 +429,7 @@ const styles = StyleSheet.create({
     emojiContainer: {
         display: 'flex',
         flexDirection: 'row',
-        width: '90%',
+        width: '100%',
         padding: 5,
         borderRadius: 10,
         marginTop: 5,
@@ -446,7 +441,8 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: Fonts.Poppins.Regular,
         fontSize: FontsSizes.paragraph,
-        textAlign: 'center',
+        textAlign: 'left',
+        width: '100%',
         color: '#6c6774',
         marginLeft: 10,
         paddingTop: 2,
@@ -459,11 +455,19 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 2,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: .01,
+        shadowRadius: 2,
+        elevation: 5,
         borderColor: '#cecece',
         borderRadius: 15,
-        height: '90%',
-        width: '90%'
+        paddingVertical: 15,
+        width: '90%',
+        backgroundColor: 'white'
     },
     submissionQuestion: {
         width: '90%',

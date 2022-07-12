@@ -160,7 +160,7 @@ const LoginPage = ({ navigation }) => {
             <View style={styles.inputContainer}>
 
                 <TextInput
-                    placeholder='Correo electronico'
+                    placeholder='Correo electrónico'
                     value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.input}

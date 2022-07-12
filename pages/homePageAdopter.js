@@ -20,11 +20,18 @@ const HomePageAdopter = ({ navigation }) => {
             .catch(error => alert(error.message))
     }
 
+    const handleNavigateChat = () => {
+        navigation.navigate("ChatPage");
+    }
+
+
     return (
         <View style={styles.homeContainer}>
             <TabBarAdopter />
             <View style={styles.headerContainer}>
-                <NavHeader handleCallLogOut={handleLogOut}></NavHeader>
+                <NavHeader
+                    handleCallLogOut={handleLogOut}
+                    handleCallToChat={handleNavigateChat}></NavHeader>
             </View>
         </View>
 

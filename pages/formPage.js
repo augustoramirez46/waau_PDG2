@@ -266,12 +266,22 @@ const FormPage = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
             <ScrollView>
                 <View style={styles.subContainer}>
-                    <Text style={styles.formTitle}>Pre-diagnóstico de adopción</Text>
+                    <Text style={styles.formTitle}>¡Queremos conocerte mejor!</Text>
+                    <View style={styles.parContainer}>
+                        <Text style={styles.parText}>A continuación, encontrarás una serie de preguntas
+                            que nos ayudarán a saber si actualmente puedes iniciar
+                            el proceso de adopción de un peludito para tu hogar. </Text>
+                    </View>
                     {form.map((parentQuestion) =>
                     (
                         <View
                             style={styles.questionContainer}
                         >
+                            <Text
+                                style={styles.counterText}
+                            >
+                                {`Pregunta ${parentQuestion.key + 1}/26`}
+                            </Text>
                             <Text
                                 key={parentQuestion.key}
                                 style={styles.questionTitle}
@@ -334,23 +344,54 @@ const styles = StyleSheet.create({
     subContainer: {
         width: '90%',
         alignSelf: 'center',
-        minHeight: '100%'
+        minHeight: '100%',
+        position: 'relative'
     },
     formTitle: {
         alignSelf: 'center',
-        margin: 10,
-        color: '#FF7B36',
-        fontFamily: Fonts.Poppins.SemiBold,
-        fontSize: FontsSizes.title,
-        textAlign: 'center'
-    },
-    questionTitle: {
+        marginTop: 40,
+        marginBottom: 40,
+        color: 'grey',
         fontFamily: Fonts.Poppins.Bold,
         fontSize: FontsSizes.title,
+        lineHeight: 30,
+        textAlign: 'center'
+    },
+    parContainer: {
+        backgroundColor: '#FF7B36',
+        padding: 30,
+        paddingLeft: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        alignContent: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+
+    },
+    parText: {
+        width: 310,
+        color: 'white',
+        textAlign: 'justify',
+        fontFamily: Fonts.Poppins.SemiBold,
+        fontSize: FontsSizes.paragraph,
+    },
+    counterText: {
+        fontFamily: Fonts.Poppins.regular,
+        fontSize: FontsSizes.paragraph,
+        color: '#FF7B36',
+        marginLeft: 10,
+        marginTop: 10,
+        marginRight: 10,
+        alignSelf: 'flex-end'
+    },
+    questionTitle: {
+        fontFamily: Fonts.Poppins.SemiBold,
+        fontSize: FontsSizes.subtitle,
         textAlign: 'left',
         lineHeight: 30,
         color: '#A5A5A5',
         paddingLeft: 10,
+        marginTop: 70,
         marginBottom: 10
 
     },
@@ -371,15 +412,36 @@ const styles = StyleSheet.create({
     },
     questionContainer: {
         marginTop: 25,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        paddingHorizontal: 5,
+        paddingBottom: 5
 
     },
     input: {
         backgroundColor: 'white',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: .01,
+        shadowRadius: 2,
+        elevation: 4,
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 10,
         marginTop: 5,
         marginBottom: 5,
+        marginHorizontal: 7,
         fontFamily: Fonts.Poppins.Regular,
         fontSize: FontsSizes.paragraph,
     },

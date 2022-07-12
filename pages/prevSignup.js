@@ -58,7 +58,7 @@ const PrevSignup = ({ navigation }) => {
                         Voluntario
                     </Text>
                     <Text style={userTypePrev == 'volunteer' ? [styles.paragraph, styles.sel] : styles.paragraph}>
-                        Estás buscandole un hogar a uno o más peluditos.                    </Text>
+                        Estás buscándole un hogar a uno o más peluditos.                    </Text>
                 </View>
                 <View style={styles.imageContainer}>
                     <Image
@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
     title: {
         fontSize: FontsSizes.title,
         fontFamily: Fonts.Poppins.Bold,
-        color: 'gray'
+        color: 'gray',
+        marginLeft: 10
 
     },
     paragraph: {
@@ -100,7 +101,8 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.Poppins.Regular,
         color: 'gray',
         width: 150,
-        textAlign: 'justify'
+        textAlign: 'left',
+        marginLeft: 10
 
     },
     sel: {
